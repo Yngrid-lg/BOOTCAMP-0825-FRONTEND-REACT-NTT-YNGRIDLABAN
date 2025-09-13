@@ -1,0 +1,36 @@
+.container {
+  padding: 20px;
+}
+
+.searchBox {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.categories button {
+  margin-right: 5px;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.productCard {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.active {
+  font-weight: bold;
+  background-color: #eee;
+}

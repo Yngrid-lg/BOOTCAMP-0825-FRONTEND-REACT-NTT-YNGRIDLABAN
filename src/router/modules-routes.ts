@@ -1,5 +1,5 @@
 export const ModulesRoutes = {
-  Login: "",
-  HomePage:"HomePage",
-  CarritoPage:"CarritoPage",
+  Login: "/",           // ruta de login
+  HomePage: "/home",    // ruta de HomePage
+  CarritoPage: "/carrito", // ruta de CarritoPage
 } as const;
