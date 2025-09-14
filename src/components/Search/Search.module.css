@@ -1,0 +1,11 @@
+.searchBox {
+  width: 100%;          /* ocupa todo el espacio disponible */
+  max-width: 500px;     /* pero nunca más de 500px */
+  display: block;       /* permite centrar con margin */
+  margin: 0 auto 20px;  /* centrado horizontal + espacio abajo */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+   justify-content: center;
+}

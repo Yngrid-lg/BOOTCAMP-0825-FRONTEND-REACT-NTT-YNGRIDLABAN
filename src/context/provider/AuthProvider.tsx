@@ -1,6 +1,6 @@
 import type {FC, ReactNode } from "react";
 import {useState} from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../AuthContext";
 
 interface Props {
   children: ReactNode;

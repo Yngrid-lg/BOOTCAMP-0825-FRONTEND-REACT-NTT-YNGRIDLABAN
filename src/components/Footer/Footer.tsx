@@ -12,7 +12,7 @@ type HeaderProps = {
   setSelectedCategory: (category: string) => void;
 };
 
-function Header({
+function Footer({
   search,
   setSearch,
   categories,
@@ -43,5 +43,5 @@ function Header({
   );
 }
 
-export default Header;
+export default Footer;
 
