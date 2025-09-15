@@ -9,6 +9,7 @@ function LoginPage() {
     <div>
       <Header/>
       <Form />
+      <LoginPage/>
     </div>
   );
 }

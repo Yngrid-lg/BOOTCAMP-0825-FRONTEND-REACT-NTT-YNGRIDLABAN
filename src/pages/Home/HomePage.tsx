@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import Agregar from "../../components/Button/Agregar";
 import Categoria from "../../components/SearchBox/Categoria";
+import Footer from "../../components/Footer/Footer";
 
 type Product = {
   id: number;
@@ -131,9 +132,11 @@ function HomePage() {
           >
             Siguiente {">"}
           </button>
-        </div>
-      )}
+        </div>)}      
+    <Footer />
     </div>
+
+    
   );
 }
 

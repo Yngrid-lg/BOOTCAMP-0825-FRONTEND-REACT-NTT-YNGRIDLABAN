@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../Carrito/Carrtito.module.css";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 
 // Tipos de producto
@@ -37,6 +38,7 @@ function CarritoPage() {
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [distritos, setDistritos] = useState<string[]>([]);
+  const [search, setSearch] = useState("");
 
   // Cargar carrito desde localStorage
   useEffect(() => {
@@ -106,7 +108,7 @@ function CarritoPage() {
   return (
     <div className={styles.pageContainer}>
       <Header />
-      <Navbar />
+      <Navbar search={search} setSearch={setSearch}/>
       <h1>🛒 Resumen del Carrito</h1>
 
       {cart.length === 0 ? (
@@ -218,6 +220,8 @@ function CarritoPage() {
           </div>
         </>
       )}
+        <Footer />
+
     </div>
   );
 }

@@ -1,47 +1,19 @@
 import React from "react";
-import styles from "./Header.module.css";
-import Categoria from "../Button/categoria";
-import Search from "../SearchBox/SearchBox";
+import styles from "./Footer.module.css";
 
-
-type HeaderProps = {
-  search: string;
-  setSearch: (value: string) => void;
-  categories: string[];
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
-};
-
-function Footer({
-  search,
-  setSearch,
-  categories,
-  selectedCategory,
-  setSelectedCategory,
-}: HeaderProps) {
-
+function Footer() {
   return (
-    <header className={styles.header}>
-      <h1 className={styles.title}>🛒 MyMarket</h1>
-      <div className={styles.logo}>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <p>© 2025 My Market. Todos los derechos reservados.</p>
+        <div className={styles.links}>
+          <a>Sobre Nosotros</a>
+          <a>Contacto</a>
+          <a>Términos y Condiciones</a>
+        </div>
       </div>
-      
-      {/* Botón de categorías */}
-      <Categoria
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
-
-      {/* Buscador */}
-      <div className={styles.search}>
-        <Search search={search} setSearch={setSearch} />
-      </div>
-
-
-    </header>
+    </footer>
   );
 }
 
 export default Footer;
-
