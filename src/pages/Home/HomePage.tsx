@@ -82,13 +82,10 @@ function HomePage() {
 
     <div className={styles.pageContainer}>
       {/* Header con búsqueda */}
-     <Header
-  search={search}
-  setSearch={setSearch}
-  categories={categories}
-  selectedCategory={selectedCategory}
-  setSelectedCategory={setSelectedCategory}
-/>
+      <Header
+        search={search}
+        setSearch={setSearch}
+      />
 
 
       {/* Navbar con carrito y logout */}
@@ -124,8 +121,11 @@ function HomePage() {
             <div key={product.id} className={styles.productCard}>
               <img src={product.thumbnail} alt={product.title} />
               <h3>{product.title}</h3>
-              <strong>{product.price} $</strong>
-<Agregar product={product} />
+              <h5>{product.description}</h5>
+              <strong>Categoría: {product.category}</strong>
+              <strong>Precio: S/{product.price} un</strong>
+              <Agregar product={product} />
+              
             </div>
           ))}
         </div>

@@ -19,10 +19,6 @@ function Navbar() {
 
   return (
     <nav className={styles.navbar}>
-      {/* Parte izquierda: Logo o título (opcional) */}
-      <div className={styles.left}>
-        <h2>🛒 MyMarket</h2>
-      </div>
 
       {/* Parte central: Links */}
       <div className={styles.links}>

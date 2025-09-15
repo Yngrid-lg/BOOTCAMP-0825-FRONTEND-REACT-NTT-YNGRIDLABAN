@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../Carrito/Carrtito.module.css";
+import Header from "../../components/Header/Header";
+
 
 // Tipos de producto
 type ProductCart = {
@@ -101,7 +103,7 @@ function CarritoPage() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className={styles.pageContainer}>
+       <div className={styles.pageContainer}>
       <h1>🛒 Resumen del Carrito</h1>
 
       {cart.length === 0 ? (

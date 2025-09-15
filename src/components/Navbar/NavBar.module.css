@@ -3,14 +3,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+  background-color: #0a3955;
 }
 
 .links a {
   margin-right: 1rem;
   text-decoration: none;
-  color: #333;
+  color: #ffffff;
   font-weight: 500;
 }
 
@@ -21,7 +20,8 @@
 }
 
 .user {
-  font-weight: 500;
+  font-weight:500;
+  color: #ffffff;
 }
 
 .logout {
@@ -37,7 +37,3 @@
   background-color: #c0392b;
 }
 
-.left h2 {
-  margin: 0;
-  font-size: 1.2rem;
-}

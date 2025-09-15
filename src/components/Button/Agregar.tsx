@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../Button/Agregar.module.css"
 
 type Product = {
   id: number;
@@ -35,8 +36,8 @@ function Agregar({ product }: AgregarProps) {
   };
 
   return (
-    <button onClick={handleAddToCart} style={{ marginTop: "0.5rem", padding: "0.4rem 0.8rem", borderRadius: "5px", border: "none", backgroundColor: "#3498db", color: "white", cursor: "pointer" }}>
-      Agregar
+    <button onClick={handleAddToCart} className={styles.button}>
+      Agregar al carrito
     </button>
   );
 }
