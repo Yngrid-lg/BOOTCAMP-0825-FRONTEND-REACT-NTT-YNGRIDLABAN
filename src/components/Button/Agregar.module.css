@@ -1,16 +1,16 @@
 .button {
   margin-top: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  background: #b73a3a;
+  padding: 0.4rem;
+  background: #e72323;
   color: rgb(255, 255, 255);
   border: none;
-  border-radius: 5px;border: "none";
+  border-radius: 3px;border: "none";
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .button:hover {
-  background: #aa3cc3;
+  background: #cab1b9;
 }
 
 

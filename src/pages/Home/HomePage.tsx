@@ -82,14 +82,10 @@ function HomePage() {
 
     <div className={styles.pageContainer}>
       {/* Header con búsqueda */}
-      <Header
-        search={search}
-        setSearch={setSearch}
-      />
-
+      <Header/>
 
       {/* Navbar con carrito y logout */}
-      <Navbar />
+      <Navbar/>
 
       {/* Categorías */}
       <div className={styles.categories}>

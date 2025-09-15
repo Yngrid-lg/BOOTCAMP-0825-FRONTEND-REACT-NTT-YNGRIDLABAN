@@ -1,4 +1,4 @@
-.searchBox {
+.search {
   width: 200%;          /* ocupa todo el espacio disponible */
   max-width: 500px;     /* pero nunca más de 500px */
   display: block;       /* permite centrar con margin */

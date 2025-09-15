@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../Carrito/Carrtito.module.css";
 import Header from "../../components/Header/Header";
+import Navbar from "../../components/Navbar/Navbar";
 
 
 // Tipos de producto
@@ -103,7 +104,9 @@ function CarritoPage() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-       <div className={styles.pageContainer}>
+    <div className={styles.pageContainer}>
+      <Header />
+      <Navbar />
       <h1>🛒 Resumen del Carrito</h1>
 
       {cart.length === 0 ? (
@@ -140,25 +143,32 @@ function CarritoPage() {
 
           {/* Formulario de envío */}
           <div className={styles.formContainer}>
-            <h3>Formulario de Envío</h3>
+            <h3>Información de envío</h3>
+
+            <label htmlFor="nombre" className={styles.label}>Nombres</label>
             <input
               type="text"
-              placeholder="Nombre"
+              placeholder="Ingresa tus nombres"
               name="nombre"
               value={form.nombre}
               onChange={handleChange}
             />
+
             {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
 
+
+            <label htmlFor="apellido" className={styles.label}>Apellidos</label>
             <input
               type="text"
-              placeholder="Apellido"
+              placeholder=" Ingresa tus apellidos"
               name="apellido"
               value={form.apellido}
               onChange={handleChange}
             />
             {errors.apellido && <span className={styles.error}>{errors.apellido}</span>}
 
+
+            <label htmlFor="distrito" className={styles.label}>Distrito</label>
             <select name="distrito" value={form.distrito} onChange={handleChange}>
               <option value="">Selecciona tu distrito</option>
               {distritos.map((d) => (
@@ -169,27 +179,33 @@ function CarritoPage() {
             </select>
             {errors.distrito && <span className={styles.error}>{errors.distrito}</span>}
 
+
+            <label htmlFor="direccion" className={styles.label}>Dirección</label>
             <input
               type="text"
-              placeholder="Dirección"
+              placeholder="Ingresa tu dirección"
               name="direccion"
               value={form.direccion}
               onChange={handleChange}
             />
             {errors.direccion && <span className={styles.error}>{errors.direccion}</span>}
 
+
+            <label htmlFor="referencia" className={styles.label}>Referencia</label>
             <input
               type="text"
-              placeholder="Referencia"
+              placeholder="Ingresa una referencia"
               name="referencia"
               value={form.referencia}
               onChange={handleChange}
             />
             {errors.referencia && <span className={styles.error}>{errors.referencia}</span>}
 
+
+            <label htmlFor="celular" className={styles.label}>Celular</label>
             <input
               type="text"
-              placeholder="Celular"
+              placeholder="Ingresa tu nombre número de celular"
               name="celular"
               value={form.celular}
               onChange={handleChange}
@@ -197,7 +213,7 @@ function CarritoPage() {
             {errors.celular && <span className={styles.error}>{errors.celular}</span>}
 
             <button onClick={handleComprar} className={styles.checkoutBtn}>
-              Comprar
+            Comprar
             </button>
           </div>
         </>

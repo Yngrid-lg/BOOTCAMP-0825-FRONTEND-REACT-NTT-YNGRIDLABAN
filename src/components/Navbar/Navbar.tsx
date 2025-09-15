@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { ModulesRoutes } from "../../router/modules-routes";
+import SearchBox from "../SearchBox/SearchBox"
 
 function Navbar() {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ function Navbar() {
   };
 
   return (
+    
     <nav className={styles.navbar}>
-
+      <SearchBox/>
       {/* Parte central: Links */}
       <div className={styles.links}>
         <Link to={ModulesRoutes.CarritoPage}>Carrito</Link>

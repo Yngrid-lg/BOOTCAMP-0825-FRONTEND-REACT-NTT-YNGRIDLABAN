@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Header.module.css";
 import Categoria from "../Button/categoria";
-import Search from "../Search/SearchBox";
+import Search from "../SearchBox/SearchBox";
 
 
 type HeaderProps = {
