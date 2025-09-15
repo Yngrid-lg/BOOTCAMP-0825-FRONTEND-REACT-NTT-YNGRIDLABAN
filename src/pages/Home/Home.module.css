@@ -5,33 +5,6 @@
   background-color: #2d92cc;
 }
 
-/* Categorías */
-.categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-
-.categories button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #000000;
-  background-color: #5f99e6;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.2s ease;
-}
-
-.categories button:hover {
-  background-color: #e0e0e0;
-}
-
-.categories .active {
-  background-color: #4b7ecc;
-  color: rgb(255, 255, 255);
-  border-color: #000000;
-}
-
 /* Grid de productos */
 .productsGrid {
   display: grid;
@@ -78,12 +51,6 @@
   text-align: center;
   color: #ffffff;
   text-align: center;
-}
-
-.productCard strong {
-  margin-bottom: 0.5rem;
-  font-size: 1.1 rem;
-  color: #fdfdfd;
 }
 
 /* Paginación */

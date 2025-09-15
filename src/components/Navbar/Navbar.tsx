@@ -3,10 +3,10 @@ import styles from "./Navbar.module.css";
 import { ModulesRoutes } from "../../router/modules-routes";
 import SearchBox from "../SearchBox/SearchBox"
 
-function Navbar() {
+function Navbar({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
   const navigate = useNavigate();
-
   const user = localStorage.getItem("user");
+
 
   const handleLogout = () => {
     // Limpiar sesión
@@ -19,21 +19,27 @@ function Navbar() {
   };
 
   return (
-    
     <nav className={styles.navbar}>
-      <SearchBox/>
-      {/* Parte central: Links */}
+
+      {/*usuario*/}
+      <div className={styles.user}>
+        {user && <span>Hola, {user}</span>}
+      </div>
+
+      <div className={styles.search}>
+        <SearchBox search={search} setSearch={setSearch} />
+      </div>
+
+      {/* Links */}
       <div className={styles.links}>
+        <Link to={ModulesRoutes.HomePage}>Inicio</Link>
         <Link to={ModulesRoutes.CarritoPage}>Carrito</Link>
       </div>
 
-      {/* Parte derecha: Usuario + Logout */}
-      <div className={styles.right}>
-        {user && <span className={styles.user}>Hola, {user}</span>}
-        <button onClick={handleLogout} className={styles.logout} aria-label="Cerrar sesión">
-          Salir
-        </button>
-      </div>
+      {/* Logout */}
+      <button onClick={handleLogout} className={styles.logout} aria-label="Cerrar sesión">
+        Salir
+      </button>
     </nav>
   );
 }

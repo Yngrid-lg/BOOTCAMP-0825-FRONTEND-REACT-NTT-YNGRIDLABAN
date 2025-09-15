@@ -2,11 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #09486d;
   width: 100%;
 }
 
 .title{
-  color: aliceblue;
+  color: rgb(255, 255, 255);
+   font-weight: 400;
+
 }

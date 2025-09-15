@@ -2,26 +2,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: #0a3955;
+  padding: 1rem 2rem;
+  background-color: #3c4e5a;
+  color: #ffffff;
+  flex-wrap: wrap;
 }
 
 .links a {
-  margin-right: 1rem;
+  margin: 0 1rem;
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
 }
 
-.right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.user {
+  font-weight: 600;
+  color: #ffffff;
 }
 
-.user {
-  font-weight:500;
-  color: #ffffff;
+.search{
+   flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .logout {
@@ -36,4 +38,3 @@
 .logout:hover {
   background-color: #c0392b;
 }
-

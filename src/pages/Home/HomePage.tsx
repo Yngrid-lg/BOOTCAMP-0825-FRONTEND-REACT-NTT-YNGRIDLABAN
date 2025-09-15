@@ -4,7 +4,7 @@ import { usePagination } from "../../shared/hooks/usePagination";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import Agregar from "../../components/Button/Agregar";
-
+import Categoria from "../../components/SearchBox/Categoria";
 
 type Product = {
   id: number;
@@ -21,12 +21,12 @@ type ApiResponse = {
 
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
+  const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
-  const itemsPerPage = 3; // productos por página
+  const itemsPerPage = 3;
 
   // Traer productos desde la API
   useEffect(() => {
@@ -41,7 +41,7 @@ function HomePage() {
         const uniqueCategories = [...new Set(data.products.map((p) => p.category))];
         setCategories(uniqueCategories);
       } catch (error) {
-        console.error("Error al traer productos:", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -50,20 +50,17 @@ function HomePage() {
     fetchProducts();
   }, []);
 
-  // Filtrado de productos con useMemo para optimizar
+  // Filtrado de productos
   const filteredProducts = useMemo(() => {
     let results = products;
-
-    if (search.length >= 3) {
+    if (search.length >= 2) {
       results = results.filter((p) =>
         p.title.toLowerCase().includes(search.toLowerCase())
       );
     }
-
     if (selectedCategory) {
       results = results.filter((p) => p.category === selectedCategory);
     }
-
     return results;
   }, [products, search, selectedCategory]);
 
@@ -73,38 +70,22 @@ function HomePage() {
     itemsPerPage
   );
 
-  // Reiniciar a la primera página si cambian filtros
+  // Reiniciar página al cambiar filtros
   useEffect(() => {
     goToPage(1);
   }, [filteredProducts]);
 
   return (
-
     <div className={styles.pageContainer}>
-      {/* Header con búsqueda */}
       <Header/>
-
-      {/* Navbar con carrito y logout */}
-      <Navbar/>
+      <Navbar search={search} setSearch={setSearch} />
 
       {/* Categorías */}
-      <div className={styles.categories}>
-        <button
-          className={!selectedCategory ? styles.active : ""}
-          onClick={() => setSelectedCategory("")}
-        >
-          Todas
-        </button>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={selectedCategory === cat ? styles.active : ""}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      <Categoria
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
 
       {/* Lista de productos */}
       {loading ? (
@@ -118,10 +99,9 @@ function HomePage() {
               <img src={product.thumbnail} alt={product.title} />
               <h3>{product.title}</h3>
               <h5>{product.description}</h5>
-              <strong>Categoría: {product.category}</strong>
-              <strong>Precio: S/{product.price} un</strong>
+              <h5>Categoría: {product.category}</h5>
+              <h5>Precio: S/{product.price}</h5>
               <Agregar product={product} />
-              
             </div>
           ))}
         </div>
@@ -136,7 +116,6 @@ function HomePage() {
           >
             {"<"} Anterior
           </button>
-
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}
@@ -146,7 +125,6 @@ function HomePage() {
               {i + 1}
             </button>
           ))}
-
           <button
             disabled={currentPage === totalPages}
             onClick={() => goToPage(currentPage + 1)}
