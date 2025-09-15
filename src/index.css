@@ -17,14 +17,11 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Open Sans', Arial, sans-serif;
   background: #ffffff;
-  color: #5f1f1f;
+  color: #000000;
   line-height: 1.5;
-  height: 100vh;
-  display: flex;  
-  justify-content: center;
-  align-items: center;
+  min-height: 100vh;
 }
 
 /* Layout principal */
