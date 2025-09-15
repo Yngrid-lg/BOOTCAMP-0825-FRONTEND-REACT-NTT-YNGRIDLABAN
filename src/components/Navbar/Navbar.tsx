@@ -1,45 +1,50 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { ModulesRoutes } from "../../router/modules-routes";
-import SearchBox from "../SearchBox/SearchBox"
+import SearchBox from "../SearchBox/SearchBox";
+import { useLocalStorage } from "../../shared/hooks/useLocalStorage";
 
-function Navbar({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
+interface NavbarProps {
+  search: string;
+  setSearch: (value: string) => void;
+  cartCount: number;
+}
+
+function Navbar({ search, setSearch, cartCount }: NavbarProps) {
   const navigate = useNavigate();
-  const user = localStorage.getItem("user");
-
+  const [userFullName, setUserFullName] = useLocalStorage("userFullName", "");
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
 
   const handleLogout = () => {
-    // Limpiar sesión
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("userFullName");
+    localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("carrito");
-
-    // Redirigir al login
+    setUserFullName("");
+    setIsLoggedIn(false);
     navigate(ModulesRoutes.Login);
   };
 
   return (
     <nav className={styles.navbar}>
-
-      {/*usuario*/}
       <div className={styles.user}>
-        {user && <span>Hola, {user}</span>}
+        {isLoggedIn ? `Hola, ${userFullName}` : "No has iniciado sesión"}
       </div>
 
       <div className={styles.search}>
         <SearchBox search={search} setSearch={setSearch} />
       </div>
 
-      {/* Links */}
       <div className={styles.links}>
         <Link to={ModulesRoutes.HomePage}>Inicio</Link>
-        <Link to={ModulesRoutes.CarritoPage}>Carrito</Link>
+        <Link to={ModulesRoutes.CarritoPage}>🛒 Carrito ({cartCount})</Link>
       </div>
 
-      {/* Logout */}
-      <button onClick={handleLogout} className={styles.logout} aria-label="Cerrar sesión">
-        Salir
-      </button>
+      {isLoggedIn && (
+        <button onClick={handleLogout} className={styles.logout}>
+          Salir
+        </button>
+      )}
     </nav>
   );
 }

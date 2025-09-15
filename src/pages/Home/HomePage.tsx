@@ -14,6 +14,7 @@ type Product = {
   description: string;
   thumbnail: string;
   category: string;
+  quantity?: number;
 };
 
 type ApiResponse = {
@@ -26,10 +27,32 @@ function HomePage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [loading, setLoading] = useState(true);
-
+  const [cartCount, setCartCount] = useState(0);
   const itemsPerPage = 3;
 
-  // Traer productos desde la API
+  // Inicializar contador desde localStorage
+  useEffect(() => {
+    const storedCart = localStorage.getItem("carrito");
+    const cart = storedCart ? JSON.parse(storedCart) : [];
+    const totalQuantity = cart.reduce(
+      (sum: number, item: any) => sum + (item.quantity || 1),
+      0
+    );
+    setCartCount(totalQuantity);
+  }, []);
+
+  // Función que se pasa a Agregar para actualizar contador
+  const updateCartCount = () => {
+    const storedCart = localStorage.getItem("carrito");
+    const cart = storedCart ? JSON.parse(storedCart) : [];
+    const totalQuantity = cart.reduce(
+      (sum: number, item: any) => sum + (item.quantity || 1),
+      0
+    );
+    setCartCount(totalQuantity);
+  };
+
+  // Traer productos desde API
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -37,9 +60,9 @@ function HomePage() {
         const res = await fetch("https://dummyjson.com/products");
         const data: ApiResponse = await res.json();
         setProducts(data.products);
-
-        // Extraer categorías únicas
-        const uniqueCategories = [...new Set(data.products.map((p) => p.category))];
+        const uniqueCategories = [
+          ...new Set(data.products.map((p) => p.category)),
+        ];
         setCategories(uniqueCategories);
       } catch (error) {
         console.error(error);
@@ -47,21 +70,18 @@ function HomePage() {
         setLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
 
-  // Filtrado de productos
+  // Filtrado
   const filteredProducts = useMemo(() => {
     let results = products;
-    if (search.length >= 2) {
+    if (search.length >= 3)
       results = results.filter((p) =>
         p.title.toLowerCase().includes(search.toLowerCase())
       );
-    }
-    if (selectedCategory) {
+    if (selectedCategory)
       results = results.filter((p) => p.category === selectedCategory);
-    }
     return results;
   }, [products, search, selectedCategory]);
 
@@ -70,25 +90,21 @@ function HomePage() {
     filteredProducts,
     itemsPerPage
   );
-
-  // Reiniciar página al cambiar filtros
   useEffect(() => {
     goToPage(1);
   }, [filteredProducts]);
 
   return (
     <div className={styles.pageContainer}>
-      <Header/>
-      <Navbar search={search} setSearch={setSearch} />
+      <Header />
+      <Navbar search={search} setSearch={setSearch} cartCount={cartCount} />
 
-      {/* Categorías */}
       <Categoria
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
 
-      {/* Lista de productos */}
       {loading ? (
         <p>Cargando productos...</p>
       ) : currentItems.length === 0 ? (
@@ -102,13 +118,12 @@ function HomePage() {
               <h5>{product.description}</h5>
               <h5>Categoría: {product.category}</h5>
               <h5>Precio: S/{product.price}</h5>
-              <Agregar product={product} />
+              <Agregar product={product} onAdd={updateCartCount} />
             </div>
           ))}
         </div>
       )}
 
-      {/* Paginación */}
       {totalPages > 1 && (
         <div className={styles.pagination}>
           <button
@@ -132,11 +147,11 @@ function HomePage() {
           >
             Siguiente {">"}
           </button>
-        </div>)}      
-    <Footer />
-    </div>
+        </div>
+      )}
 
-    
+      <Footer />
+    </div>
   );
 }
 

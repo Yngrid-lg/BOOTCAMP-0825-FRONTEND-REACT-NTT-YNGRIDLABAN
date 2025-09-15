@@ -1,90 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+/* Reset global + fuente */
 * {
-  font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Open Sans", Arial, sans-serif;
 }
 
-/* index.css */
-
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+html, body, #root {
+  height: 100%;
+  width: 100%;
 }
 
 body {
-  font-family: 'Open Sans', Arial, sans-serif;
   background: #ffffff;
   color: #000000;
   line-height: 1.5;
   min-height: 100vh;
 }
 
-/* Layout principal */
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Header */
-header {
-  background: #007bff;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
-
-/* Nav */
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-nav a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-}
-
-/* Main con sidebar + contenido */
-main {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-/* Sidebar */
-aside {
-  background: #e9ecef;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-/* Footer */
-footer {
-  background: #333;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
-
-/* 📱 Responsive: pantallas chicas */
-@media (max-width: 768px) {
-  main {
-    grid-template-columns: 1fr; /* Sidebar pasa debajo del contenido */
-  }
-
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
+header, footer {
+  width: 100%; /* ✅ Para que siempre ocupen el ancho completo */
 }

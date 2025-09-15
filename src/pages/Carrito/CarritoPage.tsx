@@ -1,227 +1,172 @@
-import React, { useState, useEffect } from "react";
-import styles from "../Carrito/Carrtito.module.css";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ModulesRoutes } from "../../router/modules-routes";
+import styles from "./Carrtito.module.css";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
-
-// Tipos de producto
-type ProductCart = {
+type CartItem = {
   id: number;
   title: string;
   price: number;
-  thumbnail: string;
   quantity: number;
-};
-
-// Tipo de formulario
-type FormData = {
-  nombre: string;
-  apellido: string;
-  distrito: string;
-  direccion: string;
-  referencia: string;
-  celular: string;
-};
-
-const initialForm: FormData = {
-  nombre: "",
-  apellido: "",
-  distrito: "",
-  direccion: "",
-  referencia: "",
-  celular: "",
+  thumbnail: string; // Imagen del producto
 };
 
 function CarritoPage() {
-  const [cart, setCart] = useState<ProductCart[]>([]);
-  const [form, setForm] = useState<FormData>(initialForm);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [distritos, setDistritos] = useState<string[]>([]);
-  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartCount, setCartCount] = useState(0);
 
-  // Cargar carrito desde localStorage
   useEffect(() => {
     const storedCart = localStorage.getItem("carrito");
-    if (storedCart) setCart(JSON.parse(storedCart));
+    const parsedCart: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
+    setCart(parsedCart);
+    updateCartCount(parsedCart);
   }, []);
 
-  // Cargar distritos desde JSON (custom hook simulado)
-  useEffect(() => {
-    fetch("/distritos.json")
-      .then((res) => res.json())
-      .then((data) => setDistritos(data.distritos))
-      .catch((err) => console.error("Error cargando distritos:", err));
-  }, []);
-
-  // Manejo de cambio en formulario
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({ ...prev, [name]: value }));
-
-    // Validación inmediata
-    let errorMsg = "";
-    if (!value.trim()) errorMsg = "Campo obligatorio";
-    if ((name === "nombre" || name === "apellido") && /\d/.test(value))
-      errorMsg = "Debe ingresar un valor válido";
-    if (name === "celular" && !/^\d{6,15}$/.test(value))
-      errorMsg = "Debe ingresar un número válido";
-
-    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
+  const updateCartCount = (items: CartItem[]) => {
+    const total = items.reduce((sum, item) => sum + item.quantity, 0);
+    setCartCount(total);
   };
 
-  // Manejo de compra
-  const handleComprar = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    // Validar todos los campos
-    Object.entries(form).forEach(([key, value]) => {
-      if (!value.trim()) newErrors[key] = "Campo obligatorio";
-    });
-
-    // Validar nombre/apellido
-    if (form.nombre && /\d/.test(form.nombre)) newErrors.nombre = "Debe ingresar un valor válido";
-    if (form.apellido && /\d/.test(form.apellido)) newErrors.apellido = "Debe ingresar un valor válido";
-
-    // Validar celular
-    if (form.celular && !/^\d{6,15}$/.test(form.celular)) newErrors.celular = "Debe ingresar un número válido";
-
-    setErrors(newErrors);
-
-    // Si hay errores, no continuar
-    if (Object.keys(newErrors).length > 0) return;
-
-    // Mostrar alerta de éxito
-    alert("Compra registrada con éxito!\n" + JSON.stringify(form, null, 2));
-
-    // Limpiar carrito y formulario, redirigir al Home
-    localStorage.removeItem("carrito");
-    setCart([]);
-    setForm(initialForm);
-    window.location.href = "/"; // redirige a HomePage
+  const increaseQuantity = (id: number) => {
+    const updatedCart = cart.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    setCart(updatedCart);
+    localStorage.setItem("carrito", JSON.stringify(updatedCart));
+    updateCartCount(updatedCart);
   };
 
-  // Calcular total
+  const decreaseQuantity = (id: number) => {
+    const updatedCart = cart.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+        : item
+    );
+    setCart(updatedCart);
+    localStorage.setItem("carrito", JSON.stringify(updatedCart));
+    updateCartCount(updatedCart);
+  };
+
+  const removeItem = (id: number) => {
+    const updatedCart = cart.filter((item) => item.id !== id);
+    setCart(updatedCart);
+    localStorage.setItem("carrito", JSON.stringify(updatedCart));
+    updateCartCount(updatedCart);
+  };
+
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className={styles.pageContainer}>
       <Header />
-      <Navbar search={search} setSearch={setSearch}/>
-      <h1>🛒 Resumen del Carrito</h1>
+      <Navbar search="" setSearch={() => {}} cartCount={cartCount} />
+
+      <h2>Mi Carrito</h2>
 
       {cart.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
+        <p>El carrito está vacío.</p>
       ) : (
         <table className={styles.cartTable}>
           <thead>
             <tr>
-              <th>Producto</th>
-              <th>Precio</th>
+              <th>Imagen</th>
+              <th>Nombre</th>
               <th>Cantidad</th>
-              <th>Total</th>
+              <th>Precio Unit.</th>
+              <th>Eliminar</th>
+              <th>Subtotal</th>
             </tr>
           </thead>
           <tbody>
             {cart.map((item) => (
               <tr key={item.id}>
                 <td>
-                  <img src={item.thumbnail} alt={item.title} className={styles.thumbnail} />
-                  {item.title}
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className={styles.productImg}
+                  />
                 </td>
-                <td>${item.price.toFixed(2)}</td>
-                <td>{item.quantity}</td>
-                <td>${(item.price * item.quantity).toFixed(2)}</td>
+                <td>{item.title}</td>
+                <td>
+                  <button
+                    className={styles.qtyBtn}
+                    onClick={() => decreaseQuantity(item.id)}
+                  >
+                    -
+                  </button>
+                  <span className={styles.qtyNumber}>{item.quantity}</span>
+                  <button
+                    className={styles.qtyBtn}
+                    onClick={() => increaseQuantity(item.id)}
+                  >
+                    +
+                  </button>
+                </td>
+                <td>S/{item.price.toFixed(2)}</td>
+                <td>
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => removeItem(item.id)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+                <td>S/{(item.price * item.quantity).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
 
+      <h3>Total: S/{total.toFixed(2)}</h3>
+
+      {/* Formulario de envío */}
       {cart.length > 0 && (
-        <>
-          <h2>Total: ${total.toFixed(2)}</h2>
-
-          {/* Formulario de envío */}
-          <div className={styles.formContainer}>
-            <h3>Información de envío</h3>
-
-            <label htmlFor="nombre" className={styles.label}>Nombres</label>
-            <input
-              type="text"
-              placeholder="Ingresa tus nombres"
-              name="nombre"
-              value={form.nombre}
-              onChange={handleChange}
-            />
-
-            {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
-
-
-            <label htmlFor="apellido" className={styles.label}>Apellidos</label>
-            <input
-              type="text"
-              placeholder=" Ingresa tus apellidos"
-              name="apellido"
-              value={form.apellido}
-              onChange={handleChange}
-            />
-            {errors.apellido && <span className={styles.error}>{errors.apellido}</span>}
-
-
-            <label htmlFor="distrito" className={styles.label}>Distrito</label>
-            <select name="distrito" value={form.distrito} onChange={handleChange}>
-              <option value="">Selecciona tu distrito</option>
-              {distritos.map((d) => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-            {errors.distrito && <span className={styles.error}>{errors.distrito}</span>}
-
-
-            <label htmlFor="direccion" className={styles.label}>Dirección</label>
-            <input
-              type="text"
-              placeholder="Ingresa tu dirección"
-              name="direccion"
-              value={form.direccion}
-              onChange={handleChange}
-            />
-            {errors.direccion && <span className={styles.error}>{errors.direccion}</span>}
-
-
-            <label htmlFor="referencia" className={styles.label}>Referencia</label>
-            <input
-              type="text"
-              placeholder="Ingresa una referencia"
-              name="referencia"
-              value={form.referencia}
-              onChange={handleChange}
-            />
-            {errors.referencia && <span className={styles.error}>{errors.referencia}</span>}
-
-
-            <label htmlFor="celular" className={styles.label}>Celular</label>
-            <input
-              type="text"
-              placeholder="Ingresa tu nombre número de celular"
-              name="celular"
-              value={form.celular}
-              onChange={handleChange}
-            />
-            {errors.celular && <span className={styles.error}>{errors.celular}</span>}
-
-            <button onClick={handleComprar} className={styles.checkoutBtn}>
-            Comprar
+        <div className={styles.checkoutForm}>
+          <h3>Formulario de Envío</h3>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Pedido enviado correctamente!");
+              localStorage.removeItem("carrito");
+              setCart([]);
+              setCartCount(0);
+              navigate(ModulesRoutes.HomePage);
+            }}
+          >
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input type="text" name="name" required />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Dirección:</label>
+              <input type="text" name="address" required />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Ciudad:</label>
+              <input type="text" name="city" required />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Código Postal:</label>
+              <input type="text" name="zipcode" required />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Notas adicionales:</label>
+              <textarea name="notes" rows={3}></textarea>
+            </div>
+            <button type="submit" className={styles.submitBtn}>
+              Enviar Pedido
             </button>
-          </div>
-        </>
+          </form>
+        </div>
       )}
-        <Footer />
 
+      <Footer />
     </div>
   );
 }

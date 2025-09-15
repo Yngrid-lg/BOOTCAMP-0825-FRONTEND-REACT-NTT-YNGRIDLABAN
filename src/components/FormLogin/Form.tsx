@@ -1,33 +1,19 @@
-import { useForm } from 'react-hook-form'
-import styles from "./Form.module.css"
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ModulesRoutes } from "../../router/modules-routes";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import styles from "./Form.module.css";
 
-
-type FormData = {
-  usuario: string;
-  contraseña: string;
-};
-
-type RecoveryData = {
-  email: string;
-};
+type FormData = { usuario: string; contraseña: string };
+type RecoveryData = { email: string };
 
 function Form() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-   const { register: registerRecovery, handleSubmit: handleRecovery, formState: { errors: recoveryErrors } } = useForm<RecoveryData>(); 
-   const [successMessage, setSuccessMessage] = useState("");
-
-  
+  const { register: registerRecovery, handleSubmit: handleRecovery, formState: { errors: recoveryErrors }, reset: resetRecovery } = useForm<RecoveryData>();
   const [errorMessage, setErrorMessage] = useState("");
-  const [showModal, setShowModal] = useState(false); // para "Olvidé contraseña"
-  const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
-  const onSubmit = handleSubmit(async (data) => {
-    const { usuario, contraseña } = data;
-
-    // Validación extra: no espacios en blanco
+  // 🔹 Manejo del login
+  const onSubmit = handleSubmit(async ({ usuario, contraseña }) => {
     if (!usuario.trim() || !contraseña.trim()) {
       setErrorMessage("No se permiten campos vacíos");
       return;
@@ -37,115 +23,80 @@ function Form() {
       const res = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: usuario,
-          password: contraseña,
-        }),
+        body: JSON.stringify({ username: usuario, password: contraseña }),
       });
 
       if (!res.ok) {
-        if (res.status === 400) {
-          setErrorMessage("Credenciales incorrectas");
-        } else {
-          setErrorMessage("Algo salió mal, inténtelo más tarde");
-        }
+        setErrorMessage(res.status === 400 ? "Credenciales incorrectas" : "Algo salió mal");
         return;
       }
 
       const dataApi = await res.json();
-      console.log("Usuario logueado correctamente:", dataApi);
 
-      // Guardar usuario en localStorage
-      localStorage.setItem("token", dataApi.Token);
-      localStorage.setItem("user", dataApi.username);
+      // 🔹 Guardamos siempre con JSON.stringify
+      localStorage.setItem("userFullName", JSON.stringify(`${dataApi.firstName} ${dataApi.lastName}`));
+      localStorage.setItem("token", JSON.stringify(dataApi.token));
+      localStorage.setItem("isLoggedIn", JSON.stringify(true));
 
-      // Redirigir al Home
-      navigate(ModulesRoutes.HomePage);
-    } catch (err) {
+      window.location.reload(); // refresca para actualizar Navbar
+    } catch {
       setErrorMessage("Algo salió mal, inténtelo más tarde");
     }
   });
 
-  // Recuperación de contraseña
+  // 🔹 Recuperación de contraseña
   const onRecover = handleRecovery((data) => {
-    console.log("Correo enviado para recuperar:", data.email);
     setSuccessMessage(`Se envió un link de recuperación a ${data.email}`);
     setTimeout(() => {
       setShowModal(false);
       setSuccessMessage("");
-    }, 3000); // Cierra después de 3 segundos
+      resetRecovery();
+    }, 3000);
   });
-
 
   return (
     <div className={styles.PageContainer}>
       <form onSubmit={onSubmit} className={styles.formContainer}>
-        {errorMessage && (
-          <p className={styles.error}>{errorMessage}</p>
-        )}
+        <h2 className={styles.formTitle}>Inicia sesión</h2>
+        <p className={styles.formSubtitle}>Bienvenido, por favor ingresa tus credenciales</p>
 
-        {/* usuario */}
-        <label htmlFor="usuario" className={styles.label}>Usuario</label>
-        <input
-          type="text"
-          className={styles.input}
-          placeholder="Ingresa tu usuario"
-          {...register("usuario", {
-            required: "El usuario es obligatorio",
-            minLength: { value: 2, message: "Mínimo 2 caracteres" }
-          })}
-        />
-        {errors.usuario && <span>{errors.usuario.message}</span>}
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
+        <label>Usuario</label>
+        <input placeholder="Ingresa tu usuario" {...register("usuario", { required: true })} />
+        {errors.usuario && <span className={styles.errorMessage}>El usuario es obligatorio</span>}
 
-        {/* contraseña */}
-        <label htmlFor="contraseña" className={styles.label}>Contraseña</label>
-        <input
-          type="password"
-          className={styles.input}
-          placeholder="Ingresa tu contraseña"
-          {...register("contraseña", { required: "La contraseña es obligatoria" })}
-        />
-        {errors.contraseña && <span>{errors.contraseña.message}</span>}
+        <label>Contraseña</label>
+        <input type="password" placeholder="Ingresa tu contraseña" {...register("contraseña", { required: true })} />
+        {errors.contraseña && <span className={styles.errorMessage}>La contraseña es obligatoria</span>}
 
+        <button type="submit" className={styles.button}>Iniciar Sesión</button>
 
-        <button type="submit" className={styles.button}>
-          Iniciar Sesión
-        </button>
-
-        {/* olvidé contraseña */}
-        <button
-          type="button"
-          className={styles.link}
-          onClick={() => setShowModal(true)}
-        >
-          Olvidé Contraseña
-        </button>
+        <button type="button" className={styles.linkButton} onClick={() => setShowModal(true)}>Olvidé contraseña</button>
       </form>
 
-      {/* Modal */}
       {showModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <h3>Recuperar contraseña</h3>
-             <form onSubmit={onRecover} className={styles.formContainer}>
-              <label htmlFor="email" className={styles.label}>Correo electrónico</label>
+            <form onSubmit={onRecover}>
+              <label>Correo electrónico</label>
               <input
                 type="email"
-                className={styles.input}
                 placeholder="Ingresa tu correo"
-                {...registerRecovery("email", { required: "El correo es obligatorio" })}
+                {...registerRecovery("email", {
+                  required: "El correo es obligatorio",
+                  pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Ingresa un correo válido" }
+                })}
               />
-              {recoveryErrors.email && <span>{recoveryErrors.email.message}</span>}
+              {recoveryErrors.email && <span className={styles.errorMessage}>{recoveryErrors.email.message}</span>}
 
-              <button type="submit" className={styles.button}>
-                Enviar enlace
-              </button>
-              <button type="button" onClick={() => setShowModal(false)} className={styles.link}>
+              <button type="submit" className={styles.button}>Enviar enlace</button>
+              <button type="button" className={styles.linkButton} onClick={() => { resetRecovery(); setShowModal(false); }}>
                 Cancelar
               </button>
             </form>
-            {successMessage && <p className={styles.success}>{successMessage}</p>}
+            {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
           </div>
         </div>
       )}

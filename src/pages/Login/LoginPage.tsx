@@ -1,19 +1,17 @@
-import { useForm } from 'react-hook-form'
+import { ModulesRoutes } from "../../router/modules-routes";
 import Form from "../../components/FormLogin/Form";
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import styles from "../Login/Login.module.css";
 
 function LoginPage() {
-  
   return (
-    <div>
-      <Header/>
+    <div className={styles.LoginPage}>
+      <Header />
       <Form />
-      <Footer/>
+      <Footer />
     </div>
   );
 }
 
-export default LoginPage
-
+export default LoginPage;

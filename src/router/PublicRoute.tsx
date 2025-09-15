@@ -9,5 +9,6 @@ interface PublicRouteProps {
 export default function PublicRoute({ children }: PublicRouteProps) {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-  return !isLoggedIn ? <>{children}</> : <Navigate to={ModulesRoutes.HomePage} />;
+  // ✅ Si ya hay sesión → redirigir al Home
+  return isLoggedIn ? <Navigate to={ModulesRoutes.HomePage} /> : <>{children}</>;
 }
