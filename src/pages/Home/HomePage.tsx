@@ -7,7 +7,6 @@ import Categoria from "../../components/shared/Category/Category";
 import Footer from "../../components/Footer/Footer";
 import Add from "../../components/Button/AddCar";
 
-
 export type Product = {
   id: number;
   title: string;
@@ -32,7 +31,7 @@ function HomePage() {
   const [cartCount, setCartCount] = useState(0);
   const itemsPerPage = 4;
 
-  // Inicializar contador 
+  // Inicializar contador
   useEffect(() => {
     const storedCart = localStorage.getItem("carrito");
     const cart = storedCart ? JSON.parse(storedCart) : [];
@@ -40,14 +39,13 @@ function HomePage() {
     setCartCount(uniqueProductsCount);
   }, []);
 
-
   const updateCartCount = () => {
     const storedCart = localStorage.getItem("carrito");
     const cart = storedCart ? JSON.parse(storedCart) : [];
     setCartCount(cart.length);
   };
 
-  // LLama productos y categorías de las APIs 
+  // LLama productos y categorías de las APIs
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
@@ -74,9 +72,10 @@ function HomePage() {
   // Filtrado de productos
   const filteredProducts = useMemo(() => {
     let results = products;
-    if (search.length >= 3) /*se realizará la busqueda ingresando como minimo tres caracteres*/
+    if (search.length >= 3)
+      /*se realizará la busqueda ingresando como minimo tres caracteres*/
       results = results.filter((p) =>
-        p.title.toLowerCase().includes(search.toLowerCase())
+        p.title.toLowerCase().includes(search.toLowerCase()),
       );
     if (selectedCategory)
       results = results.filter((p) => p.category === selectedCategory);
@@ -86,7 +85,7 @@ function HomePage() {
   //paginación
   const { currentItems, currentPage, totalPages, goToPage } = usePagination(
     filteredProducts,
-    itemsPerPage
+    itemsPerPage,
   );
   useEffect(() => {
     goToPage(1);

@@ -20,8 +20,8 @@
   color: #ffffff;
 }
 
-.search{
-   flex: 1;
+.search {
+  flex: 1;
   display: flex;
   justify-content: center;
 }

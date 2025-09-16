@@ -13,7 +13,6 @@ interface NavbarProps {
 function Navbar({ search, setSearch, cartCount }: NavbarProps) {
   const navigate = useNavigate();
 
- 
   const [userFullName, setUserFullName] = useLocalStorage("userFullName", "");
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
 

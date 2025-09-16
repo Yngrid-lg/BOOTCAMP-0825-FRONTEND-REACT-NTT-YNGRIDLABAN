@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from '../Modal/Alert.module.css';
+import React from "react";
+import styles from "../Modal/Alert.module.css";
 
 interface AlertModalProps {
   message: string;
@@ -7,7 +7,11 @@ interface AlertModalProps {
   onClose: () => void;
 }
 
-const AlertModal: React.FC<AlertModalProps> = ({ message, isVisible, onClose }) => {
+const AlertModal: React.FC<AlertModalProps> = ({
+  message,
+  isVisible,
+  onClose,
+}) => {
   if (!isVisible) return null;
 
   return (

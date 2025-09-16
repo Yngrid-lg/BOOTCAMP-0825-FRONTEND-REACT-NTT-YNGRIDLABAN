@@ -4,12 +4,12 @@
   min-height: 100vh;
   max-width: 2000px;
   padding: 0rem;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #2d92cc;
 }
 
 .mainContent {
-  flex-grow: 1; 
+  flex-grow: 1;
   padding: 2rem;
 }
 
@@ -44,14 +44,14 @@
 }
 
 .productCard h3 {
-  font-size: 1.rem;
+  font-size: 1rem;
   margin: 0.5rem 0;
   text-align: center;
   color: #ffffff;
 }
 
 .productCard h5 {
-  font-size: 1.rem;
+  font-size: 1rem;
   margin: 0.5rem 0;
   text-align: center;
   color: #ffffffda;

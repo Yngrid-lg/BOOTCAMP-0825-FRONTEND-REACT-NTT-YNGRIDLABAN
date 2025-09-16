@@ -7,7 +7,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       console.warn(`Error parsing localStorage key "${key}":`, error);
-      return initialValue; 
+      return initialValue;
     }
   });
 

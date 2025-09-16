@@ -20,9 +20,8 @@
   border-color: #007bff;
 }
 
-
 .clearButton {
-  position:absolute;
+  position: absolute;
   right: 0.9rem;
   background: none;
   border: none;

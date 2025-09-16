@@ -1,8 +1,11 @@
 .PageContainer {
   display: flex;
-  justify-content: center;   /* Centrar horizontal */
-  align-items: center;       /* Centrar vertical */
-  height: 80vh;              /* Ocupa casi toda la pantalla */
+  justify-content: center;
+  /* Centrar horizontal */
+  align-items: center;
+  /* Centrar vertical */
+  height: 80vh;
+  /* Ocupa casi toda la pantalla */
 }
 
 .formContainer {
@@ -12,7 +15,7 @@
   padding: 30px;
   background: #f8f8f8;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .formContainer h2 {
@@ -20,7 +23,6 @@
   font-size: 22px;
   color: #1c1b1b;
 }
-
 
 .formTitle {
   text-align: center;
@@ -37,8 +39,10 @@
 }
 
 .label {
-  display: block;         /* Hace que el label ocupe toda la línea */
-  margin-bottom: 5px;     /* Separa el texto del input */
+  display: block;
+  /* Hace que el label ocupe toda la línea */
+  margin-bottom: 5px;
+  /* Separa el texto del input */
   font-weight: 500;
   color: #333;
 }
@@ -46,7 +50,8 @@
 input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;    /* Espacio entre cada campo */
+  margin-bottom: 15px;
+  /* Espacio entre cada campo */
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 14px;
@@ -85,8 +90,11 @@ input {
 
 .modalOverlay {
   position: fixed;
-  top: 0; left: 0; right:0; bottom:0;
-  background: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;

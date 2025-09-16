@@ -1,7 +1,7 @@
 /* Definición de variables CSS */
 :root {
   --header-bg-color: #09486d;
-  --text-color:#ffffff;
+  --text-color: #ffffff;
 }
 
 .header {
@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: var(--header-bg-color); 
+  background-color: var(--header-bg-color);
   width: 100%;
 }
 

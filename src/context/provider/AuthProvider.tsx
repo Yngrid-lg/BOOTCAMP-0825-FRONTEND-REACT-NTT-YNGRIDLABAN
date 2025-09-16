@@ -1,5 +1,5 @@
-import type {FC, ReactNode } from "react";
-import {useState} from "react";
+import type { FC, ReactNode } from "react";
+import { useState } from "react";
 import { AuthContext } from "../AuthContext";
 
 interface Props {
@@ -7,8 +7,12 @@ interface Props {
 }
 
 export const AuthProvider: FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<string | null>(() => localStorage.getItem("user"));
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
+  const [user, setUser] = useState<string | null>(() =>
+    localStorage.getItem("user"),
+  );
+  const [token, setToken] = useState<string | null>(() =>
+    localStorage.getItem("token"),
+  );
 
   const login = (user: string, token: string) => {
     setUser(user);

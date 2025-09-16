@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./AddCar.module.css";
-import type { Product } from "../../pages/Home/HomePage"; 
+import type { Product } from "../../pages/Home/HomePage";
 import AlertModal from "../shared/Modal/AlertModal";
 
 type AddCar = {
@@ -14,7 +14,7 @@ type CartItem = Product & {
 
 function AddCar({ product, onAdd }: AddCar) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleAddToCart = () => {
     const storedCart = localStorage.getItem("carrito");
@@ -27,12 +27,15 @@ function AddCar({ product, onAdd }: AddCar) {
       return;
     }
 
-
-    const existingItem = cart.find((item): item is CartItem => item.id === product.id);
+    const existingItem = cart.find(
+      (item): item is CartItem => item.id === product.id,
+    );
 
     if (existingItem) {
       if (existingItem.quantity >= product.stock) {
-        setModalMessage("No puedes agregar más productos, ¡has alcanzado el stock máximo!");
+        setModalMessage(
+          "No puedes agregar más productos, ¡has alcanzado el stock máximo!",
+        );
         setModalVisible(true);
         return;
       }

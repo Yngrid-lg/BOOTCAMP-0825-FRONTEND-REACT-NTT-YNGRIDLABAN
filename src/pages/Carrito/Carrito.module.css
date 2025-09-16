@@ -5,8 +5,9 @@
   min-height: 100vh;
   max-width: 2000px;
   margin: 0 auto;
-  font-family: 'Arial', sans-serif;
-  background-color: #2d92cc; /* Nuevo color de fondo */
+  font-family: "Arial", sans-serif;
+  background-color: #2d92cc;
+  /* Nuevo color de fondo */
   color: #ffffff;
 }
 
@@ -18,7 +19,8 @@
 .mainContent h2 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #ffffff; /* Color para el título */
+  color: #ffffff;
+  /* Color para el título */
 }
 
 /* Tabla del carrito */
@@ -31,7 +33,9 @@
   overflow: hidden;
 }
 
-.cartTable th, .cartTable tr, .cartTable td {
+.cartTable th,
+.cartTable tr,
+.cartTable td {
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid #ffffff;
@@ -53,7 +57,8 @@
   border-radius: 4px;
 }
 
-.qtyBtn { /*+-*/
+.qtyBtn {
+  /*+-*/
   background-color: #2d92cc;
   border: none;
   color: white;
@@ -127,7 +132,8 @@
   color: #cfcfcf;
 }
 
-.formGroup input, .formGroup select {
+.formGroup input,
+.formGroup select {
   padding: 0.75rem;
   border: 1px solid #09486d;
   background-color: #1a2342;
@@ -137,7 +143,8 @@
   transition: border-color 0.2s;
 }
 
-.formGroup input:focus, .formGroup select:focus {
+.formGroup input:focus,
+.formGroup select:focus {
   outline: none;
   border-color: #2d92cc;
 }

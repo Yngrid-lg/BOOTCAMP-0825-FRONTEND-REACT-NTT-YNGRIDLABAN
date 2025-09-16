@@ -11,12 +11,17 @@ interface FormProps {
 }
 
 function Form({ onOpenRecovery }: FormProps) {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async ({ username, password }) => {
-    if (!username.trim() || !password.trim()) return setErrorMessage("No se permiten campos vacíos");
+    if (!username.trim() || !password.trim())
+      return setErrorMessage("No se permiten campos vacíos");
 
     try {
       const data = await loginUser(username, password);
@@ -31,21 +36,42 @@ function Form({ onOpenRecovery }: FormProps) {
     <div className={styles.PageContainer}>
       <form onSubmit={onSubmit} className={styles.formContainer}>
         <h2 className={styles.formTitle}>Inicia sesión</h2>
-        <p className={styles.formSubtitle}>Bienvenido, por favor ingresa tus credenciales</p>
+        <p className={styles.formSubtitle}>
+          Bienvenido, por favor ingresa tus credenciales
+        </p>
 
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
         <label>Usuario</label>
-        <input placeholder="Ingresa tu usuario" {...register("username", { required: true })} />
-        {errors.username && <span className={styles.errorMessage}>El usuario es obligatorio</span>}
+        <input
+          placeholder="Ingresa tu usuario"
+          {...register("username", { required: true })}
+        />
+        {errors.username && (
+          <span className={styles.errorMessage}>El usuario es obligatorio</span>
+        )}
 
         <label>Contraseña</label>
-        <input type="password" placeholder="Ingresa tu contraseña" {...register("password", { required: true })} />
-        {errors.password && <span className={styles.errorMessage}>La contraseña es obligatoria</span>}
+        <input
+          type="password"
+          placeholder="Ingresa tu contraseña"
+          {...register("password", { required: true })}
+        />
+        {errors.password && (
+          <span className={styles.errorMessage}>
+            La contraseña es obligatoria
+          </span>
+        )}
 
-        <button type="submit" className={styles.button}>Iniciar Sesión</button>
+        <button type="submit" className={styles.button}>
+          Iniciar Sesión
+        </button>
 
-        <button type="button" className={styles.linkButton} onClick={onOpenRecovery}>
+        <button
+          type="button"
+          className={styles.linkButton}
+          onClick={onOpenRecovery}
+        >
           Olvidé contraseña
         </button>
       </form>

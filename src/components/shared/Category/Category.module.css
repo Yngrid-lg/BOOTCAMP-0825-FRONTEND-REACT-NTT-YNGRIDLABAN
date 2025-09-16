@@ -1,6 +1,6 @@
 .categoriaContainer {
   display: flex;
-  justify-content:left;
+  justify-content: left;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
