@@ -74,7 +74,7 @@ function HomePage() {
   // Filtrado de productos
   const filteredProducts = useMemo(() => {
     let results = products;
-    if (search.length >= 3)
+    if (search.length >= 3) /*se realizará la busqueda ingresando como minimo tres caracteres*/
       results = results.filter((p) =>
         p.title.toLowerCase().includes(search.toLowerCase())
       );
