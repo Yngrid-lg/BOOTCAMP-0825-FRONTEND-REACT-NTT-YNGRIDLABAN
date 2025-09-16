@@ -4,8 +4,8 @@ import { usePagination } from "../../components/shared/hooks/usePagination";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import Categoria from "../../components/shared/Category/Category";
-import Agregar from "../../components/Button/Agregar";
 import Footer from "../../components/Footer/Footer";
+import Add from "../../components/Button/AddCar";
 
 
 export type Product = {
@@ -123,7 +123,7 @@ function HomePage() {
                 <h5>{product.description}</h5>
                 <h5>Categoría: {product.category}</h5>
                 <h5>Precio: S/{product.price}</h5>
-                <Agregar product={product} onAdd={updateCartCount} />
+                <Add product={product} onAdd={updateCartCount} />
               </div>
             ))}
           </div>

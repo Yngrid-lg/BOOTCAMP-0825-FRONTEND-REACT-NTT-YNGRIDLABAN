@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+/* Definición de variables de CSS globales */
+:root {
+  --color-primary: #09486d;
+  --color-text-light: #ffffff;
+  --color-text-dark: #000000;
+  --color-bg-light: #f1f1f1;
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -7,6 +16,7 @@
   font-family: "Open Sans", Arial, sans-serif;
 }
 
+/* Estilos base para la página */
 html,
 body,
 #root {
@@ -15,8 +25,8 @@ body,
 }
 
 body {
-  background: #ffffff;
-  color: #000000;
+  background: var(--color-bg-light); /* Usa la variable */
+  color: var(--color-text-dark); /* Usa la variable */
   line-height: 1.5;
   min-height: 100vh;
 }
