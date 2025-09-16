@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Alerta.module.css'; 
+import styles from '../Modal/Alerta.module.css';
 
 interface AlertModalProps {
   message: string;

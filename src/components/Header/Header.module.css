@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0rem;
   background-color: #09486d;
   width: 100%;
 }
@@ -10,5 +10,4 @@
 .title{
   color: rgb(255, 255, 255);
    font-weight: 400;
-
-}
+  }

@@ -1,18 +1,25 @@
 .pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   max-width: 2000px;
   padding: 0rem;
   font-family: 'Arial', sans-serif;
   background-color: #2d92cc;
 }
 
-/* Grid de productos */
+.mainContent {
+  flex-grow: 1; 
+  padding: 2rem;
+}
+
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 2rem;
+  margin-top: 2rem;
 }
 
-/* Tarjeta de producto */
 .productCard {
   border: 1px solid #200a52;
   border-radius: 8px;
@@ -21,7 +28,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  transition: box-shadow 0.2s ease;
   transition: box-shadow 0.2s ease;
 }
 
@@ -35,7 +41,6 @@
   object-fit: cover;
   border-radius: 5px;
   align-items: center;
-
 }
 
 .productCard h3 {
@@ -49,7 +54,7 @@
   font-size: 1.rem;
   margin: 0.5rem 0;
   text-align: center;
-  color: #ffffff;
+  color: #ffffffda;
   text-align: center;
 }
 
@@ -64,7 +69,7 @@
 
 .pagination button {
   padding: 0.4rem 0.8rem;
-  border: 1px solid #09486d;
+  border: 1px solid #000000;
   background-color: #09486d;
   cursor: pointer;
   border-radius: 5px;
@@ -93,6 +98,6 @@
 .pageContainer p {
   text-align: center;
   font-size: 1.1rem;
-  color: #555;
+  color: #cfcfcf;
   margin-top: 2rem;
 }

@@ -1,41 +1,63 @@
-import React from "react";
-import styles from "../Button/Agregar.module.css";
-
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-};
+import React, { useState } from "react";
+import styles from "./Agregar.module.css";
+import type { Product } from "../../pages/Home/HomePage"; 
+import AlertModal from "../shared/Modal/AlertModal";
 
 type AgregarProps = {
   product: Product;
-  onAdd: () => void; // función para actualizar el contador
+  onAdd: () => void;
+};
+
+// Define a type for items in the cart
+type CartItem = Product & {
+  quantity: number;
 };
 
 function Agregar({ product, onAdd }: AgregarProps) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
   const handleAddToCart = () => {
     const storedCart = localStorage.getItem("carrito");
-    let cart = storedCart ? JSON.parse(storedCart) : [];
+    // Ensure the cart is properly typed as an array of CartItem
+    let cart: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
 
-    const existingIndex = cart.findIndex((item: any) => item.id === product.id);
-    if (existingIndex >= 0) {
-      cart[existingIndex].quantity += 1;
+    // Check if the product is out of stock
+    if (product.stock === 0) {
+      setModalMessage("¡Producto sin stock!");
+      setModalVisible(true);
+      return;
+    }
+
+    const existingItem = cart.find((item): item is CartItem => item.id === product.id);
+
+    if (existingItem) {
+      if (existingItem.quantity >= product.stock) {
+        setModalMessage("No puedes agregar más de este producto, ¡has alcanzado el stock máximo!");
+        setModalVisible(true);
+        return;
+      }
+      existingItem.quantity += 1;
     } else {
       cart.push({ ...product, quantity: 1 });
     }
 
     localStorage.setItem("carrito", JSON.stringify(cart));
-
-    // Actualizar contador en tiempo real
     onAdd();
   };
 
   return (
-    <button onClick={handleAddToCart} className={styles.button}>
-      Agregar al carrito
-    </button>
+    <>
+      <button onClick={handleAddToCart} className={styles.button}>
+        Agregar al carrito
+      </button>
+      <AlertModal
+        message={modalMessage}
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
+    </>
   );
 }
 
-export default Agregar;
+export default Agregar; 

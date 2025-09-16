@@ -1,0 +1,170 @@
+/* Estilos para el contenedor principal de la página */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 2000px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  background-color: #2d92cc; /* Nuevo color de fondo */
+  color: #ffffff;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+.mainContent h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffffff; /* Color para el título */
+}
+
+/* Tabla del carrito */
+.cartTable {
+  width: 70%;
+  border-collapse: collapse;
+  margin: 0 auto 2rem;
+  background-color: #2a3a69;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cartTable th, .cartTable tr, .cartTable td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ffffff;
+}
+
+.cartTable thead {
+  background-color: #09486d;
+  color: #ffffff;
+}
+
+.cartTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.productImg {
+  width: 70px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.qtyBtn { /*+-*/
+  background-color: #2d92cc;
+  border: none;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.qtyBtn:hover {
+  background-color: #5994b9;
+}
+
+.qtyNumber {
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+.removeBtn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.removeBtn:hover {
+  background-color: #cc0000;
+}
+
+.mainContent h3 {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+/* Formulario de envío */
+.checkoutForm {
+  width: 70%;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #2a3a69;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkoutForm h3 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.shippingForm {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #cfcfcf;
+}
+
+.formGroup input, .formGroup select {
+  padding: 0.75rem;
+  border: 1px solid #09486d;
+  background-color: #1a2342;
+  color: #ffffff;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  outline: none;
+  border-color: #2d92cc;
+}
+
+.inputError {
+  border-color: #ff4d4d !important;
+}
+
+.errorText {
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.submitBtn {
+  grid-column: 1 / -1;
+  background-color: #2d92cc;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+  background-color: #1e6fa0;
+}
