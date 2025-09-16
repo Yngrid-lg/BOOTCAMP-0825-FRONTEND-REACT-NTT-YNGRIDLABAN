@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import styles from "./Form.module.css";
 
-type FormData = { usuario: string; contraseña: string };
+type FormData = { username: string; password: string };
 type RecoveryData = { email: string };
 
 function Form() {
@@ -13,8 +13,8 @@ function Form() {
   const [showModal, setShowModal] = useState(false);
 
   // 🔹 Manejo del login
-  const onSubmit = handleSubmit(async ({ usuario, contraseña }) => {
-    if (!usuario.trim() || !contraseña.trim()) {
+  const onSubmit = handleSubmit(async ({ username, password }) => {
+    if (!username.trim() || !password.trim()) {
       setErrorMessage("No se permiten campos vacíos");
       return;
     }
@@ -23,7 +23,7 @@ function Form() {
       const res = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: usuario, password: contraseña }),
+        body: JSON.stringify({ username: username, password: password }),
       });
 
       if (!res.ok) {
@@ -33,7 +33,7 @@ function Form() {
 
       const dataApi = await res.json();
 
-      // 🔹 Guardamos siempre con JSON.stringify
+      // 🔹 Guardamos JSON.stringify
       localStorage.setItem("userFullName", JSON.stringify(`${dataApi.firstName} ${dataApi.lastName}`));
       localStorage.setItem("token", JSON.stringify(dataApi.token));
       localStorage.setItem("isLoggedIn", JSON.stringify(true));
@@ -63,12 +63,12 @@ function Form() {
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
         <label>Usuario</label>
-        <input placeholder="Ingresa tu usuario" {...register("usuario", { required: true })} />
-        {errors.usuario && <span className={styles.errorMessage}>El usuario es obligatorio</span>}
+        <input placeholder="Ingresa tu usuario" {...register("username", { required: true })} />
+        {errors.username && <span className={styles.errorMessage}>El usuario es obligatorio</span>}
 
         <label>Contraseña</label>
-        <input type="password" placeholder="Ingresa tu contraseña" {...register("contraseña", { required: true })} />
-        {errors.contraseña && <span className={styles.errorMessage}>La contraseña es obligatoria</span>}
+        <input type="password" placeholder="Ingresa tu contraseña" {...register("password", { required: true })} />
+        {errors.password && <span className={styles.errorMessage}>La contraseña es obligatoria</span>}
 
         <button type="submit" className={styles.button}>Iniciar Sesión</button>
 
