@@ -1,0 +1,40 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #09486d;
+  color: #ffffff;
+  flex-wrap: wrap;
+}
+
+.links a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.user {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logout {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background-color: #c0392b;
+}

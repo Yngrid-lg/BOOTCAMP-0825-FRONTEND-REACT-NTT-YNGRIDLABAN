@@ -1,0 +1,20 @@
+/* Definición de variables CSS */
+:root {
+  --header-bg-color: #09486d;
+  --text-color: #ffffff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--header-bg-color);
+  width: 100%;
+}
+
+.title {
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: bold;
+}

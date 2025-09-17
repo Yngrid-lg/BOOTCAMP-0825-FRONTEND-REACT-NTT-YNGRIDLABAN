@@ -1,0 +1,36 @@
+.searchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search:focus {
+  border-color: #007bff;
+}
+
+.clearButton {
+  position: absolute;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.clearButton:hover {
+  color: #863e3e;
+}

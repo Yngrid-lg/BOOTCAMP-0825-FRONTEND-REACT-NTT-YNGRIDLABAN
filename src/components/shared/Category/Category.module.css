@@ -1,0 +1,38 @@
+.categoriaContainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: rgba(15, 35, 116, 0.589);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.categoryButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ffffff;
+  background-color: #09486d;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.categoryButton:hover {
+  background-color: #c0ccd2;
+}
+
+.categoryButton.active {
+  background-color: #023756;
+  border-color: #fff;
+}
+
+.categorySelect {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #ffffff;
+  font-size: 0.9rem;
+  background-color: #09486d;
+  color: #ffffff;
+}

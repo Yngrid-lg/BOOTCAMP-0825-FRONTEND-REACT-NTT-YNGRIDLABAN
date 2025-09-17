@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import type { FC } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+import PrivateRoute from "./router/PrivateRouter";
+import PublicRoute from "./router/PublicRoute";
 
+import LoginPage from "./pages/Login/LoginPage";
+import HomePage from "./pages/Home/HomePage";
+import CarritoPage from "./pages/Carrito/CarritoPage";
+
+import { ModulesRoutes } from "./router/modules-routes";
+
+const App: FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      {/* 🔹 Login solo accesible si NO estás logueado */}
+      <Route
+        path={ModulesRoutes.Login}
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
 
-export default App
+      {/* 🔹 Home solo accesible si estás logueado */}
+      <Route
+        path={ModulesRoutes.HomePage}
+        element={
+          <PrivateRoute>
+            <HomePage />
+          </PrivateRoute>
+        }
+      />
+
+      {/* 🔹 Carrito solo accesible si estás logueado */}
+      <Route
+        path={ModulesRoutes.CarritoPage}
+        element={
+          <PrivateRoute>
+            <CarritoPage />
+          </PrivateRoute>
+        }
+      />
+
+      {/* 🔹 Ruta por defecto */}
+      <Route path="*" element={<Navigate to={ModulesRoutes.Login} />} />
+    </Routes>
+  );
+};
+
+export default App;
