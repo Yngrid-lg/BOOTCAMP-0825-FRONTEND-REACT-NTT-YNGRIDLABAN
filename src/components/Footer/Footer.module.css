@@ -1,7 +1,7 @@
 .footer {
   width: 100%;
-  background-color: #111;
-  color: #fff;
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-text);
   text-align: center;
   padding: 20px;
   position: relative;
@@ -23,14 +23,14 @@
 }
 
 .footer .links a {
-  color: #f1f1f1;
+  color: var(--color-text-link);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
 }
 
 .footer .links a:hover {
-  color: #a2e3b2; /* un verde parecido al header */
+  color: var(--color-text-link-hover);
 }
 
 /* Responsive */
@@ -42,3 +42,4 @@
     margin: 0 auto;
   }
 }
+

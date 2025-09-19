@@ -22,6 +22,12 @@ function RecoveryModal({ isVisible, onClose }: RecoveryModalProps) {
   } = useForm<RecoveryData>();
   const [successMessage, setSuccessMessage] = useState("");
 
+  const handleCloseModal = () => {
+    reset();
+    setSuccessMessage("");
+    onClose();
+  };
+
   const onRecover = handleSubmit((data) => {
     setSuccessMessage(`Se envió un link de recuperación a ${data.email}`);
     setTimeout(() => {
@@ -53,7 +59,7 @@ function RecoveryModal({ isVisible, onClose }: RecoveryModalProps) {
           <button type="submit" className={styles.button}>
             Enviar enlace
           </button>
-          <button type="button" className={styles.linkButton} onClick={onClose}>
+          <button type="button" className={styles.linkButton} onClick={handleCloseModal}>
             Cancelar
           </button>
         </form>
