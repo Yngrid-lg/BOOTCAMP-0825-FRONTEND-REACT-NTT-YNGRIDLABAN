@@ -11,7 +11,7 @@ interface UseFormResult<T> {
   values: T;
   errors: { [key in keyof T]?: string };
   handleChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => void;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
   resetForm: () => void;
@@ -26,12 +26,12 @@ function useForm<T>({
   const [errors, setErrors] = useState<{ [key in keyof T]?: string }>({});
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target as any;
     setValues({
       ...values,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -50,14 +50,14 @@ function useForm<T>({
         }
       }
     }
+
     setErrors(newErrors);
     return isValid;
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const isValid = validate();
-    if (isValid) {
+    if (validate()) {
       onSubmit(values);
     }
   };

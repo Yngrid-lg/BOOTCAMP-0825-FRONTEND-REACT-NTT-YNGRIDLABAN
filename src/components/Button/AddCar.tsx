@@ -1,50 +1,37 @@
 import React, { useState } from "react";
 import styles from "./AddCar.module.css";
-import type { Product } from "../../pages/Home/HomePage";
-import AlertModal from "../shared/Modal/AlertModal";
+import type { Product } from "../../app/domain/product";
+import AlertModal from "../../app/shared/Modal/AlertModal";
+import { useCart } from "../../context/CartContext";
 
-type AddCar = {
+type AddCarProps = {
   product: Product;
   onAdd: () => void;
 };
 
-type CartItem = Product & {
-  quantity: number;
-};
-
-function AddCar({ product, onAdd }: AddCar) {
+function AddCar({ product, onAdd }: AddCarProps) {
+  const { cart, addItem } = useCart();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
   const handleAddToCart = () => {
-    const storedCart = localStorage.getItem("carrito");
-    let cart: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
+    const existingItem = cart.find(item => item.id === product.id);
 
-    // Check if the product is out of stock
     if (product.stock === 0) {
       setModalMessage("¡Producto sin stock!");
       setModalVisible(true);
       return;
     }
 
-    const existingItem = cart.find(
-      (item): item is CartItem => item.id === product.id,
-    );
-
-    if (existingItem) {
-      if (existingItem.quantity >= product.stock) {
-        setModalMessage(
-          "No puedes agregar más productos, ¡has alcanzado el stock máximo!",
-        );
-        setModalVisible(true);
-        return;
-      }
-      existingItem.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
+    if (existingItem && existingItem.quantity >= product.stock) {
+      setModalMessage(
+        "No puedes agregar más productos, ¡has alcanzado el stock máximo!"
+      );
+      setModalVisible(true);
+      return;
     }
 
-    localStorage.setItem("carrito", JSON.stringify(cart));
+    addItem(product);
     onAdd();
   };
 

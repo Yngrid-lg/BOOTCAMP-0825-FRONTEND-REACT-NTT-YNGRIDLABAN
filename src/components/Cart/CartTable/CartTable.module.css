@@ -1,0 +1,70 @@
+/* Tabla del carrito */
+.cartTable {
+  flex-grow: 1;
+  border-collapse: collapse;
+  margin: 0 auto 2rem;
+  background-color: #2a4069;
+  border-radius: 8px;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.cartTable th,
+.cartTable tr,
+.cartTable td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ffffff;
+}
+
+.cartTable thead {
+  background-color: #132e3dce;
+  color: #ffffff;
+}
+
+.cartTable tbody {
+  border-bottom: none;
+}
+
+.productImg {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.qtyBtn {
+  /*+-*/
+  background-color: #cc2d2d;
+  font-weight: bold;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.qtyBtn:hover {
+  background-color: #da6a62d6;
+}
+
+.qtyNumber {
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+.removeBtn {
+  background-color: #fa2626;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.removeBtn:hover {
+  background-color: #cc0000;
+}

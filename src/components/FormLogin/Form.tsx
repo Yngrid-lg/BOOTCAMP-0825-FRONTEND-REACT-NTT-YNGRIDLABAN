@@ -1,34 +1,41 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, saveLoginData } from "../../Services/authServices";
+import { loginUser } from "../../Services/authService";
+import { AuthContext } from "../../context/AuthContext";
 import styles from "./Form.module.css";
 
 type FormData = { username: string; password: string };
 
 interface FormProps {
   onOpenRecovery: () => void;
+  onLoginSuccess?: () => void;
 }
-
-function Form({ onOpenRecovery }: FormProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+function Form({ onOpenRecovery, onLoginSuccess }: FormProps) {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async ({ username, password }) => {
-    if (!username.trim() || !password.trim())
+    if (!username.trim() || !password.trim()) {
       return setErrorMessage("No se permiten campos vacíos");
+    }
 
     try {
       const data = await loginUser(username, password);
-      saveLoginData(data);
-      navigate("/home"); // o ModulesRoutes.HomePage
-    } catch (error: any) {
-      setErrorMessage(error.message || "Algo salió mal, inténtelo más tarde");
+
+      const fullName = `${data.firstName} ${data.lastName}`;
+
+      login(fullName, data.token, () => {
+        if (onLoginSuccess) onLoginSuccess();
+        navigate("/home");
+      });
+
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message || "Algo salió mal, inténtelo más tarde");
+      }
     }
   });
 

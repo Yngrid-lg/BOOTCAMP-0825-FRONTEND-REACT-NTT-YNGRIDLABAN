@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Form from "../../components/FormLogin/Form";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import RecoveryModal from "../../components/shared/Modal/RecoveryModal";
+import Form from "../../../components/FormLogin/Form";
+import Header from "../../../components/Header/Header";
+import Footer from "../../../components/Footer/Footer";
+import RecoveryModal from "../../shared/Modal/RecoveryModal";
 import styles from "./Login.module.css";
 
 function LoginPage() {

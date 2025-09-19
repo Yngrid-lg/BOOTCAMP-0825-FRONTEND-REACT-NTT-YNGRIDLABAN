@@ -4,9 +4,11 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (!item) return initialValue;
+      return JSON.parse(item) as T;
     } catch (error) {
       console.warn(`Error parsing localStorage key "${key}":`, error);
+      window.localStorage.removeItem(key);
       return initialValue;
     }
   });

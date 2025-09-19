@@ -1,8 +1,9 @@
-import { useLocalStorage } from "../shared/hooks/useLocalStorage";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import { ModulesRoutes } from "../../router/modules-routes";
+import { ModulesRoutes } from "../../router/appRoutes";
 import SearchBox from "../SearchBox/SearchBox";
+import { AuthContext } from "../../context/AuthContext";
 
 interface NavbarProps {
   search: string;
@@ -12,28 +13,17 @@ interface NavbarProps {
 
 function Navbar({ search, setSearch, cartCount }: NavbarProps) {
   const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
 
-  const [userFullName, setUserFullName] = useLocalStorage("userFullName", "");
-  const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
-
-  // Función de logout
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("carrito");
-    localStorage.removeItem("userFullName");
-    localStorage.removeItem("isLoggedIn");
-
-    setUserFullName("");
-    setIsLoggedIn(false);
-
-    navigate(ModulesRoutes.Login);
+    logout(); navigate(ModulesRoutes.Login);
   };
 
   return (
     <nav className={styles.navbar}>
       {/* Saludo al usuario */}
       <div className={styles.user}>
-        {isLoggedIn ? `Hola, ${userFullName}` : "No has iniciado sesión"}
+        {user ? `Hola, ${user}` : "No has iniciado sesión"}
       </div>
 
       {/* Barra de búsqueda */}
@@ -48,7 +38,7 @@ function Navbar({ search, setSearch, cartCount }: NavbarProps) {
       </div>
 
       {/* Botón de logout */}
-      {isLoggedIn && (
+      {user && (
         <button onClick={handleLogout} className={styles.logout}>
           Salir
         </button>

@@ -1,0 +1,37 @@
+.productCard {
+    border: 1px solid #200a52;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: rgba(15, 35, 116, 0.589);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+    box-shadow: 0 4px 10px rgba(255, 2, 2, 0.1);
+}
+
+.productCard img {
+    width: 100%;
+    max-width: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.productCard h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+.productCard h5 {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+    color: #ffffffda;
+    text-align: center;
+}
